@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package>
+  <name>nomadic_driver</name>
+  <version>1.0.0</version>
+  <description>ROS driver for Nomadic robots</description>
+
+  <author email="donatodipaola@gmail.com">Donato Di Paola</author>
+  <maintainer email="donatodipaola@gmail.com">Donato Di Paola</maintainer>
+  <license>MIT</license>
+  <!-- <url type="website">http://wiki.ros.org/nomadic_driver</url> -->
+  
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>roscpp</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>tf</build_depend>
+  <build_depend>roslib</build_depend>
+
+  <run_depend>roscpp</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>tf</run_depend>
+  <run_depend>roslib</run_depend>
+
+</package>
