@@ -82,6 +82,28 @@ int main(int argc, char** argv) {
 	// Set command timeout
 	conf_tm(100);
 
+
+	//TODO tune the pose covariance matrix
+	//TODO read matrix from file
+	const boost::array<double, 36ul> covariance_matrix_pose = {
+		0.01, 0, 0, 0, 0, 0,
+		0, 0.01, 0, 0, 0, 0,
+		0, 0, 0.01, 0, 0, 0,
+		0, 0, 0, 0.01, 0, 0,
+		0, 0, 0, 0, 0.01, 0,
+		0, 0, 0, 0, 0, 0.03};
+
+	//TODO tune the twist covariance matrix
+	//TODO read matrix from file
+	const boost::array<double, 36ul> covariance_matrix_twist = {
+		0.01, 0, 0, 0, 0, 0,
+		0, 0.01, 0, 0, 0, 0,
+		0, 0, 0.01, 0, 0, 0,
+		0, 0, 0, 0.01, 0, 0,
+		0, 0, 0, 0, 0.01, 0,
+		0, 0, 0, 0, 0, 0.03};
+
+
 	ros::Time current_time;
 	ros::Rate rate(10.0);
 
@@ -125,10 +147,12 @@ int main(int argc, char** argv) {
 		odom.pose.pose.position.y = odom_y;
 		odom.pose.pose.position.z = 0.0;
 		odom.pose.pose.orientation = odom_quat;
+		odom.pose.covariance = covariance_matrix_pose;
 
 		odom.twist.twist.linear.x = odom_velx;
 		odom.twist.twist.linear.y = 0.0;
 		odom.twist.twist.angular.z = odom_velz;
+		odom.twist.covariance = covariance_matrix_twist;
 
 		odom_pub.publish(odom);
 
