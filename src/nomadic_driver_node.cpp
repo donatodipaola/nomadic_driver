@@ -38,6 +38,14 @@ int main(int argc, char** argv) {
 
 	ros::NodeHandle n;
 
+	// Load parameters
+	std::string port;
+	std::string model;
+
+	n.param<std::string>("port", port, "/dev/ttyUSB0");
+	n.param<std::string>("model", model, "Scout2");
+
+
 	// Pub/Sub
 	ros::Publisher odom_pub = n.advertise<nav_msgs::Odometry>("/odom", 50);
 	//ros::Publisher robot_state_pub = n.advertise<lse_sensor_msgs::Range>("/sonar", 50);
@@ -46,13 +54,6 @@ int main(int argc, char** argv) {
 	// tf 
 	tf::TransformBroadcaster odom_broadcaster;
 
-
-	// Load parameters
-	std::string port; 
-	std::string model; 
-
-	n.param<std::string>("port", port, "/dev/ttyUSB0");
-	n.param<std::string>("model", model, "Scout2");
 
 	int robot_model;
 	if(model.compare("N200")==0) robot_model = MODEL_N200;
