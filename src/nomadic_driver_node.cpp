@@ -44,12 +44,16 @@ int main(int argc, char** argv) {
 
 	n.param<std::string>("port", port, "/dev/ttyUSB0");
 	n.param<std::string>("model", model, "Scout2");
+	n.param<std::string>("topic_odom", topic_odom, "/odom");
+	n.param<std::string>("topic_cmd_vel", topic_cmd_vel, "/cmd_vel");
+	n.param<std::string>("tf_odom", tf_odom, "/odom");
+	n.param<std::string>("tf_base_link", tf_base_link, "/base_link");
 
 
 	// Pub/Sub
-	ros::Publisher odom_pub = n.advertise<nav_msgs::Odometry>("/odom", 50);
+	ros::Publisher odom_pub = n.advertise<nav_msgs::Odometry>(topic_odom, 50);
 	//ros::Publisher robot_state_pub = n.advertise<lse_sensor_msgs::Range>("/sonar", 50);
-	ros::Subscriber cmd_vel_sub = n.subscribe("/cmd_vel", 1, cmdVelCallback);
+	ros::Subscriber cmd_vel_sub = n.subscribe(topic_cmd_vel, 1, cmdVelCallback);
 
 	// tf 
 	tf::TransformBroadcaster odom_broadcaster;
@@ -128,8 +132,8 @@ int main(int argc, char** argv) {
 		geometry_msgs::TransformStamped odom_trans;
 
 		odom_trans.header.stamp = current_time;
-		odom_trans.header.frame_id = "/odom";
-		odom_trans.child_frame_id = "/base_link";
+		odom_trans.header.frame_id = tf_odom;
+		odom_trans.child_frame_id = tf_base_link;
 
 		odom_trans.transform.translation.x = odom_x;
 		odom_trans.transform.translation.y = odom_y;
@@ -141,8 +145,8 @@ int main(int argc, char** argv) {
 		// Odometry
 		nav_msgs::Odometry odom;
 		odom.header.stamp = current_time;
-		odom.header.frame_id = "/odom";
-		odom.child_frame_id = "/base_link";
+		odom.header.frame_id = tf_odom;
+		odom.child_frame_id = tf_base_link;
 
 		odom.pose.pose.position.x = odom_x;
 		odom.pose.pose.position.y = odom_y;
