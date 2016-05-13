@@ -46,12 +46,14 @@ int main(int argc, char** argv) {
 	std::string tf_odom;
 	std::string tf_base_link;
 	bool publish_tf;
+	double covariance_diagonal;
 
 	n.param<std::string>("port", port, "/dev/ttyUSB0");
 	n.param<std::string>("model", model, "Scout2");
 	n.param<std::string>("odom_frame_id", tf_odom, "/odom");
 	n.param<std::string>("frame_id", tf_base_link, "/base_link");
 	n.param<bool>("publish_tf", publish_tf, true);
+	n.param<double>("covariance_diagonal", covariance_diagonal, 0.1);
 
 
 	// Pub/Sub
@@ -95,22 +97,22 @@ int main(int argc, char** argv) {
 	//TODO tune the pose covariance matrix
 	//TODO read matrix from file
 	const boost::array<double, 36ul> covariance_matrix_pose = {
-		0.01, 0, 0, 0, 0, 0,
-		0, 0.01, 0, 0, 0, 0,
-		0, 0, 0.01, 0, 0, 0,
-		0, 0, 0, 0.01, 0, 0,
-		0, 0, 0, 0, 0.01, 0,
-		0, 0, 0, 0, 0, 0.03};
+		covariance_diagonal, 0, 0, 0, 0, 0,
+		0, covariance_diagonal, 0, 0, 0, 0,
+		0, 0, covariance_diagonal, 0, 0, 0,
+		0, 0, 0, covariance_diagonal, 0, 0,
+		0, 0, 0, 0, covariance_diagonal, 0,
+		0, 0, 0, 0, 0, covariance_diagonal};
 
 	//TODO tune the twist covariance matrix
 	//TODO read matrix from file
 	const boost::array<double, 36ul> covariance_matrix_twist = {
-		0.01, 0, 0, 0, 0, 0,
-		0, 0.01, 0, 0, 0, 0,
-		0, 0, 0.01, 0, 0, 0,
-		0, 0, 0, 0.01, 0, 0,
-		0, 0, 0, 0, 0.01, 0,
-		0, 0, 0, 0, 0, 0.03};
+		covariance_diagonal, 0, 0, 0, 0, 0,
+		0, covariance_diagonal, 0, 0, 0, 0,
+		0, 0, covariance_diagonal, 0, 0, 0,
+		0, 0, 0, covariance_diagonal, 0, 0,
+		0, 0, 0, 0, covariance_diagonal, 0,
+		0, 0, 0, 0, 0, covariance_diagonal};
 
 
 	ros::Time current_time;
