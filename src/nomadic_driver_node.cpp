@@ -45,11 +45,13 @@ int main(int argc, char** argv) {
 	std::string topic_cmd_vel = "cmd_vel";
 	std::string tf_odom;
 	std::string tf_base_link;
+	bool publish_tf;
 
 	n.param<std::string>("port", port, "/dev/ttyUSB0");
 	n.param<std::string>("model", model, "Scout2");
 	n.param<std::string>("odom_frame_id", tf_odom, "/odom");
 	n.param<std::string>("frame_id", tf_base_link, "/base_link");
+	n.param<bool>("publish_tf", publish_tf, true);
 
 
 	// Pub/Sub
@@ -142,7 +144,7 @@ int main(int argc, char** argv) {
 		odom_trans.transform.translation.z = 0.0;
 		odom_trans.transform.rotation = odom_quat;
 
-		odom_broadcaster.sendTransform(odom_trans);
+		if (publish_tf == true) odom_broadcaster.sendTransform(odom_trans);
 
 		// Odometry
 		nav_msgs::Odometry odom;
