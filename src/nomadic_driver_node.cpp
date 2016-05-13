@@ -41,15 +41,13 @@ int main(int argc, char** argv) {
 	// Load parameters
 	std::string port;
 	std::string model;
-	std::string topic_odom;
-	std::string topic_cmd_vel;
+	std::string topic_odom    = "odom";
+	std::string topic_cmd_vel = "cmd_vel";
 	std::string tf_odom;
 	std::string tf_base_link;
 
 	n.param<std::string>("port", port, "/dev/ttyUSB0");
 	n.param<std::string>("model", model, "Scout2");
-	n.param<std::string>("topic_odom", topic_odom, "/odom");
-	n.param<std::string>("topic_cmd_vel", topic_cmd_vel, "/cmd_vel");
 	n.param<std::string>("tf_odom", tf_odom, "/odom");
 	n.param<std::string>("tf_base_link", tf_base_link, "/base_link");
 
