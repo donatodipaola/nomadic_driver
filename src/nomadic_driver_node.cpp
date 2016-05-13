@@ -48,8 +48,8 @@ int main(int argc, char** argv) {
 
 	n.param<std::string>("port", port, "/dev/ttyUSB0");
 	n.param<std::string>("model", model, "Scout2");
-	n.param<std::string>("tf_odom", tf_odom, "/odom");
-	n.param<std::string>("tf_base_link", tf_base_link, "/base_link");
+	n.param<std::string>("odom_frame_id", tf_odom, "/odom");
+	n.param<std::string>("frame_id", tf_base_link, "/base_link");
 
 
 	// Pub/Sub
