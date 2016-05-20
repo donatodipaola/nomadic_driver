@@ -53,7 +53,7 @@ int main(int argc, char** argv) {
 	n.param<std::string>("odom_frame_id", tf_odom, "/odom");
 	n.param<std::string>("frame_id", tf_base_link, "/base_link");
 	n.param<bool>("publish_tf", publish_tf, true);
-	n.param<double>("covariance_diagonal", covariance_diagonal, 0.1);
+	n.param<double>("covariance_diagonal", covariance_diagonal, 0.0025);
 
 
 	// Pub/Sub
