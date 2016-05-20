@@ -4,7 +4,7 @@ ROS driver for Nomadic robots
 ## Subscribed Topics
 
 #### `cmd_vel` *geometry_msgs::Twist*
-Tthe velocity command that the robot should execute.
+The velocity command that the robot should execute.
 
 ## Published Topics
 
