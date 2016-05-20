@@ -94,8 +94,6 @@ int main(int argc, char** argv) {
 	conf_tm(100);
 
 
-	//TODO tune the pose covariance matrix
-	//TODO read matrix from file
 	const boost::array<double, 36ul> covariance_matrix_pose = {
 		covariance_diagonal, 0, 0, 0, 0, 0,
 		0, covariance_diagonal, 0, 0, 0, 0,
@@ -104,8 +102,6 @@ int main(int argc, char** argv) {
 		0, 0, 0, 0, covariance_diagonal, 0,
 		0, 0, 0, 0, 0, covariance_diagonal};
 
-	//TODO tune the twist covariance matrix
-	//TODO read matrix from file
 	const boost::array<double, 36ul> covariance_matrix_twist = {
 		covariance_diagonal, 0, 0, 0, 0, 0,
 		0, covariance_diagonal, 0, 0, 0, 0,
