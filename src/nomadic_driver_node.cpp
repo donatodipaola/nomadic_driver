@@ -47,13 +47,30 @@ int main(int argc, char** argv) {
 	std::string tf_base_link;
 	bool publish_tf;
 	double covariance_diagonal;
+	double covariance_pose[6];
+	double covariance_twist[6];
 
 	n.param<std::string>("port", port, "/dev/ttyUSB0");
 	n.param<std::string>("model", model, "Scout2");
 	n.param<std::string>("odom_frame_id", tf_odom, "/odom");
 	n.param<std::string>("frame_id", tf_base_link, "/base_link");
 	n.param<bool>("publish_tf", publish_tf, true);
-	n.param<double>("covariance_diagonal", covariance_diagonal, 0.1);
+
+	n.param<double>("covariance_diagonal", covariance_diagonal, 0.0025);
+
+	n.param<double>("covariance_pose_1", covariance_pose[0], covariance_diagonal);
+	n.param<double>("covariance_pose_2", covariance_pose[1], covariance_diagonal);
+	n.param<double>("covariance_pose_3", covariance_pose[2], covariance_diagonal);
+	n.param<double>("covariance_pose_4", covariance_pose[3], covariance_diagonal);
+	n.param<double>("covariance_pose_5", covariance_pose[4], covariance_diagonal);
+	n.param<double>("covariance_pose_6", covariance_pose[5], covariance_diagonal);
+
+	n.param<double>("covariance_twist_1", covariance_twist[0], covariance_diagonal);
+	n.param<double>("covariance_twist_2", covariance_twist[1], covariance_diagonal);
+	n.param<double>("covariance_twist_3", covariance_twist[2], covariance_diagonal);
+	n.param<double>("covariance_twist_4", covariance_twist[3], covariance_diagonal);
+	n.param<double>("covariance_twist_5", covariance_twist[4], covariance_diagonal);
+	n.param<double>("covariance_twist_6", covariance_twist[5], covariance_diagonal);
 
 
 	// Pub/Sub
@@ -94,25 +111,21 @@ int main(int argc, char** argv) {
 	conf_tm(100);
 
 
-	//TODO tune the pose covariance matrix
-	//TODO read matrix from file
 	const boost::array<double, 36ul> covariance_matrix_pose = {
-		covariance_diagonal, 0, 0, 0, 0, 0,
-		0, covariance_diagonal, 0, 0, 0, 0,
-		0, 0, covariance_diagonal, 0, 0, 0,
-		0, 0, 0, covariance_diagonal, 0, 0,
-		0, 0, 0, 0, covariance_diagonal, 0,
-		0, 0, 0, 0, 0, covariance_diagonal};
+		covariance_pose[0], 0, 0, 0, 0, 0,
+		0, covariance_pose[1], 0, 0, 0, 0,
+		0, 0, covariance_pose[2], 0, 0, 0,
+		0, 0, 0, covariance_pose[3], 0, 0,
+		0, 0, 0, 0, covariance_pose[4], 0,
+		0, 0, 0, 0, 0, covariance_pose[5]};
 
-	//TODO tune the twist covariance matrix
-	//TODO read matrix from file
 	const boost::array<double, 36ul> covariance_matrix_twist = {
-		covariance_diagonal, 0, 0, 0, 0, 0,
-		0, covariance_diagonal, 0, 0, 0, 0,
-		0, 0, covariance_diagonal, 0, 0, 0,
-		0, 0, 0, covariance_diagonal, 0, 0,
-		0, 0, 0, 0, covariance_diagonal, 0,
-		0, 0, 0, 0, 0, covariance_diagonal};
+		covariance_twist[0], 0, 0, 0, 0, 0,
+		0, covariance_twist[1], 0, 0, 0, 0,
+		0, 0, covariance_twist[2], 0, 0, 0,
+		0, 0, 0, covariance_twist[3], 0, 0,
+		0, 0, 0, 0, covariance_twist[4], 0,
+		0, 0, 0, 0, 0, covariance_twist[5]};
 
 
 	ros::Time current_time;
