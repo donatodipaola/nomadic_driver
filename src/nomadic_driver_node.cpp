@@ -49,11 +49,15 @@ int main(int argc, char** argv) {
 	double covariance_diagonal;
 	double covariance_pose[6];
 	double covariance_twist[6];
+	int retry_interval;
 
 	n.param<std::string>("port", port, "/dev/ttyUSB0");
 	n.param<std::string>("model", model, "Scout2");
 	n.param<std::string>("odom_frame_id", tf_odom, "/odom");
 	n.param<std::string>("frame_id", tf_base_link, "/base_link");
+
+	n.param<int>("retry_interval", retry_interval, 2500);
+
 	n.param<bool>("publish_tf", publish_tf, true);
 
 	n.param<double>("covariance_diagonal", covariance_diagonal, 0.0025);
@@ -98,9 +102,11 @@ int main(int argc, char** argv) {
 	// Connect to the robot
 	ROS_INFO("nomadic_driver_node | Connecting to the robot ...");
 
-	if(connect_robot(1, robot_model, port.c_str(), SCOUT_BAUD_RATE)) {
+	while(connect_robot(1, robot_model, port.c_str(), SCOUT_BAUD_RATE)==0){
 		ROS_FATAL("nomadic_driver_node | Cannot connect to the robot");
-		return 1;
+		if(retry_interval == 0) return 1;
+		ROS_FATAL("nomadic_driver_node | Will retry in %d milliseconds", retry_interval);
+		boost::this_thread::sleep(boost::posix_time::milliseconds(retry_interval));
 	}
 
 	// Reset

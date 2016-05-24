@@ -20,6 +20,12 @@ Default: `/dev/ttyUSB0`.
 The robot model. Can be "N200", "N150", "Scout", "Scout2".
 Default: `Scout2`.
 
+#### `retry_interval` *int*
+If the driver can't connect to the robot, retry after this time interval (in
+milliseconds).
+If this param is set to `0` the driver quits when the first conection fails.
+Default: `2500`.
+
 #### `odom_frame_id` *string*
 The tf frame attached to the origin of the reference system.
 Default: `/odom`.
