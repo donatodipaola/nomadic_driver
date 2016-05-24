@@ -106,7 +106,7 @@ int main(int argc, char** argv) {
 		ROS_FATAL("nomadic_driver_node | Cannot connect to the robot");
 		if(retry_interval == 0) return 1;
 		ROS_FATAL("nomadic_driver_node | Will retry in %d milliseconds", retry_interval);
-		sleep(retry_interval);
+		usleep(retry_interval*1000);
 	}
 
 	// Reset
