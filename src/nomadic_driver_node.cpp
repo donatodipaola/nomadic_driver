@@ -36,7 +36,7 @@ int main(int argc, char** argv) {
 	// ROS	
 	ros::init(argc, argv, "nomadic_driver_node");
 
-	ros::NodeHandle n;
+	ros::NodeHandle n("~");
 
 	// Load parameters
 	std::string port;
